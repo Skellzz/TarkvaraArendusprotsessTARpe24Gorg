@@ -1,47 +1,1019 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ainemapp</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Ainemapp // REALITY.EXE</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik+Glitch&family=Monoton&family=Creepster&family=Bungee+Shade&family=Nosifer&display=swap" rel="stylesheet">
+
+<!-- ⚠️ CSS ON 100% SAMA, EI MUUTNUD ⚠️ -->
+<style>
+    :root{
+      --pink:#ff00ff;
+      --cyan:#00ffff;
+      --yellow:#ffff00;
+      --green:#39ff14;
+      --bg0:#070011;
+      --bg1:#0a001a;
+      --bg2:#00121a;
+
+      --accentA: var(--pink);
+      --accentB: var(--cyan);
+      --accentC: var(--yellow);
+      --accentD: var(--green);
+
+      --glowA: 0 0 12px rgba(255,0,255,.75), 0 0 28px rgba(255,0,255,.45), 0 0 52px rgba(255,0,255,.25);
+      --glowB: 0 0 12px rgba(0,255,255,.75), 0 0 28px rgba(0,255,255,.45), 0 0 52px rgba(0,255,255,.25);
+      --glowC: 0 0 12px rgba(255,255,0,.75), 0 0 28px rgba(255,255,0,.35), 0 0 52px rgba(255,255,0,.20);
+      --glowD: 0 0 12px rgba(57,255,20,.75), 0 0 28px rgba(57,255,20,.35), 0 0 52px rgba(57,255,20,.20);
+
+      --noiseOpacity:.18;
+      --warp: 0deg;
+      --hue: 0deg;
+      --sat: 140%;
+      --contrast: 120%;
+      --portalShift: 0deg;
+    }
+
+    /* Neon scrollbar */
+    *{
+      scrollbar-width: thin;
+      scrollbar-color: var(--accentB) rgba(0,0,0,.2);
+    }
+    *::-webkit-scrollbar{ width: 14px; height: 14px; }
+    *::-webkit-scrollbar-track{
+      background: linear-gradient(180deg, rgba(0,0,0,.2), rgba(255,0,255,.12), rgba(0,255,255,.12));
+      box-shadow: inset 0 0 12px rgba(0,0,0,.65);
+    }
+    *::-webkit-scrollbar-thumb{
+      border-radius: 999px;
+      background:
+        conic-gradient(from 0deg, var(--pink), var(--cyan), var(--yellow), var(--green), var(--pink));
+      box-shadow: 0 0 18px rgba(0,255,255,.45), 0 0 24px rgba(255,0,255,.35);
+      border: 2px solid rgba(0,0,0,.35);
+    }
+
+    html,body{
+      height:100%;
+      margin:0;
+      background: radial-gradient(1200px 700px at 20% 15%, rgba(255,0,255,.18), transparent 55%),
+                  radial-gradient(1000px 800px at 80% 10%, rgba(0,255,255,.16), transparent 55%),
+                  radial-gradient(900px 900px at 40% 90%, rgba(57,255,20,.12), transparent 60%),
+                  linear-gradient(180deg, var(--bg0), var(--bg1), var(--bg2));
+      overflow-x:hidden;
+      color: rgba(255,255,255,.92);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      filter: hue-rotate(var(--portalShift)) saturate(var(--sat)) contrast(var(--contrast));
+    }
+
+    /* Always-on “reality breaking” overlay */
+    .noise{
+      pointer-events:none;
+      position:fixed; inset:0;
+      background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,.03), rgba(255,255,255,.03) 1px, transparent 1px, transparent 3px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.02), rgba(255,255,255,.02) 1px, transparent 1px, transparent 4px);
+      mix-blend-mode: overlay;
+      opacity: var(--noiseOpacity);
+      animation: noiseShift 220ms steps(2,end) infinite;
+      z-index: 90;
+    }
+    @keyframes noiseShift{
+      0%{ transform: translate3d(0,0,0) rotate(0.01deg); }
+      20%{ transform: translate3d(-1%,1%,0) rotate(0.01deg); }
+      40%{ transform: translate3d(2%,-1%,0) rotate(0.01deg); }
+      60%{ transform: translate3d(-2%,-2%,0) rotate(0.01deg); }
+      80%{ transform: translate3d(1%,2%,0) rotate(0.01deg); }
+      100%{ transform: translate3d(0,0,0) rotate(0.01deg); }
+    }
+
+    /* Matrix + embers + cursor trail canvases */
+    canvas.fx{
+      position:fixed; inset:0;
+      width:100%; height:100%;
+      z-index: 0;
+      pointer-events:none;
+    }
+    #matrix{ opacity:.55; mix-blend-mode: screen; filter: blur(.2px) saturate(160%); }
+    #embers{ opacity:.85; mix-blend-mode: screen; filter: blur(.1px); }
+    #trail{ opacity:1; mix-blend-mode: screen; }
+
+    /* Massive glowing backdrop blobs */
+    .bg-blob{
+      position:fixed;
+      width: 48vmax; height: 48vmax;
+      left: -12vmax; top: -14vmax;
+      background: radial-gradient(circle at 30% 30%, rgba(255,0,255,.55), transparent 60%),
+                  radial-gradient(circle at 70% 60%, rgba(0,255,255,.45), transparent 62%),
+                  radial-gradient(circle at 50% 80%, rgba(255,255,0,.28), transparent 65%);
+      filter: blur(30px) saturate(180%);
+      opacity:.40;
+      z-index: 1;
+      animation: blobFloat 9s ease-in-out infinite alternate, hueSpin 8s linear infinite;
+      transform-origin: 30% 30%;
+    }
+    .bg-blob.b2{
+      left: auto; right: -18vmax;
+      top: 20vmax;
+      width: 52vmax; height: 52vmax;
+      opacity:.33;
+      animation-duration: 13s, 7s;
+      transform-origin: 60% 40%;
+    }
+    @keyframes hueSpin{
+      from{ filter: blur(32px) saturate(180%) hue-rotate(0deg); }
+      to{ filter: blur(32px) saturate(180%) hue-rotate(360deg); }
+    }
+    @keyframes blobFloat{
+      0%{ transform: translate3d(0,0,0) rotate(-3deg) scale(1); }
+      35%{ transform: translate3d(6vmax,3vmax,0) rotate(7deg) scale(1.05) skewX(6deg); }
+      70%{ transform: translate3d(2vmax,8vmax,0) rotate(-11deg) scale(.98) skewY(-6deg); }
+      100%{ transform: translate3d(8vmax,2vmax,0) rotate(14deg) scale(1.08) skewX(-8deg); }
+    }
+
+    /* Layout */
+    .wrap{
+      position:relative;
+      z-index: 2;
+      min-height: 100vh;
+    }
+
+    header.hero{
+      position:relative;
+      padding: clamp(28px, 4vw, 64px) 18px 20px;
+      isolation:isolate;
+    }
+
+    /* Rotating conic gradient border frame */
+    .frame{
+      position:relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 22px;
+      border-radius: 26px;
+      overflow:hidden;
+      box-shadow: 0 0 60px rgba(0,0,0,.65);
+      transform: perspective(900px) rotateX(2deg);
+    }
+    .frame::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        conic-gradient(from var(--warp),
+          rgba(255,0,255,1),
+          rgba(0,255,255,1),
+          rgba(255,255,0,1),
+          rgba(57,255,20,1),
+          rgba(255,0,255,1)
+        );
+      filter: blur(1px) saturate(170%);
+      animation: spinConic 2.1s linear infinite;
+      opacity: .95;
+    }
+    .frame::after{
+      content:"";
+      position:absolute; inset: 4px;
+      background:
+        radial-gradient(900px 300px at 20% 0%, rgba(255,0,255,.22), transparent 60%),
+        radial-gradient(700px 380px at 85% 15%, rgba(0,255,255,.20), transparent 60%),
+        linear-gradient(180deg, rgba(0,0,0,.65), rgba(0,0,0,.38));
+      border-radius: 22px;
+      box-shadow: inset 0 0 40px rgba(0,0,0,.65);
+    }
+    @keyframes spinConic{
+      to{ --warp: 360deg; }
+    }
+
+    .frame > .content{
+      position:relative;
+      z-index: 2;
+      border-radius: 18px;
+      padding: clamp(18px, 3vw, 34px);
+      backdrop-filter: blur(10px);
+    }
+
+    /* Glitchy RGB split headline */
+    .glitch{
+      position:relative;
+      display:inline-block;
+      font-family: "Rubik Glitch", system-ui, sans-serif;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      font-size: clamp(40px, 6vw, 88px);
+      line-height: .92;
+      color: rgba(255,255,255,.92);
+      text-shadow:
+        0 0 18px rgba(255,255,255,.22),
+        3px 0 0 rgba(255,0,255,.85),
+        -3px 0 0 rgba(0,255,255,.85),
+        0 0 55px rgba(255,0,255,.25);
+      animation: glitchMain 2.2s infinite linear;
+      filter: drop-shadow(0 0 22px rgba(0,255,255,.28));
+      transform: translateZ(0);
+    }
+    .glitch::before,
+    .glitch::after{
+      content: attr(data-text);
+      position:absolute; inset:0;
+      pointer-events:none;
+      mix-blend-mode: screen;
+      opacity: .85;
+    }
+    .glitch::before{
+      color: rgba(0,255,255,.9);
+      transform: translate3d(-2px,0,0);
+      clip-path: polygon(0 2%, 100% 0, 100% 34%, 0 38%);
+      animation: glitchSlice 1.7s infinite steps(2,end);
+      text-shadow: 0 0 18px rgba(0,255,255,.45);
+    }
+    .glitch::after{
+      color: rgba(255,0,255,.9);
+      transform: translate3d(2px,0,0);
+      clip-path: polygon(0 62%, 100% 56%, 100% 100%, 0 100%);
+      animation: glitchSlice2 2.1s infinite steps(2,end);
+      text-shadow: 0 0 18px rgba(255,0,255,.45);
+    }
+    @keyframes glitchMain{
+      0%{ transform: translate3d(0,0,0) skewX(0deg); filter: hue-rotate(0deg) saturate(150%); }
+      9%{ transform: translate3d(-1px,0,0) skewX(-2deg); }
+      10%{ transform: translate3d(2px,-1px,0) skewX(6deg) rotateZ(.2deg); }
+      11%{ transform: translate3d(-2px,1px,0) skewX(-7deg); }
+      12%{ transform: translate3d(0,0,0) skewX(0deg); }
+      55%{ filter: hue-rotate(40deg) saturate(165%); }
+      100%{ filter: hue-rotate(360deg) saturate(150%); }
+    }
+    @keyframes glitchSlice{
+      0%{ clip-path: polygon(0 2%, 100% 0, 100% 34%, 0 38%); transform: translate3d(-2px,0,0); }
+      10%{ clip-path: polygon(0 12%, 100% 8%, 100% 36%, 0 44%); transform: translate3d(-6px,-1px,0); }
+      20%{ clip-path: polygon(0 0, 100% 4%, 100% 22%, 0 18%); transform: translate3d(3px,1px,0); }
+      30%{ clip-path: polygon(0 18%, 100% 16%, 100% 52%, 0 46%); transform: translate3d(-3px,0,0); }
+      100%{ clip-path: polygon(0 2%, 100% 0, 100% 34%, 0 38%); transform: translate3d(-2px,0,0); }
+    }
+    @keyframes glitchSlice2{
+      0%{ clip-path: polygon(0 62%, 100% 56%, 100% 100%, 0 100%); transform: translate3d(2px,0,0); }
+      15%{ clip-path: polygon(0 50%, 100% 58%, 100% 98%, 0 92%); transform: translate3d(7px,1px,0); }
+      25%{ clip-path: polygon(0 74%, 100% 66%, 100% 100%, 0 100%); transform: translate3d(-5px,-1px,0); }
+      60%{ clip-path: polygon(0 60%, 100% 62%, 100% 100%, 0 96%); transform: translate3d(4px,0,0); }
+      100%{ clip-path: polygon(0 62%, 100% 56%, 100% 100%, 0 100%); transform: translate3d(2px,0,0); }
+    }
+
+    .sub{
+      margin-top: 14px;
+      max-width: 76ch;
+      font-size: clamp(14px, 1.5vw, 18px);
+      line-height: 1.5;
+      color: rgba(255,255,255,.85);
+      text-shadow: 0 0 18px rgba(255,0,255,.16), 0 0 18px rgba(0,255,255,.12);
+    }
+    .sub b{
+      color: rgba(255,255,255,.95);
+      text-shadow: var(--glowB);
+    }
+
+    /* Neon buttons / portals */
+    .portals{
+      margin-top: 18px;
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+      align-items:center;
+    }
+    .portal{
+      position:relative;
+      border: none;
+      cursor: pointer;
+      padding: 12px 14px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(255,255,255,.22), transparent 40%),
+        linear-gradient(135deg, rgba(255,0,255,.35), rgba(0,255,255,.22), rgba(57,255,20,.15));
+      color: rgba(255,255,255,.92);
+      font-family: "Bungee Shade", system-ui, sans-serif;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: 12px;
+      box-shadow: var(--glowA), var(--glowB);
+      transition: transform .18s ease, filter .18s ease;
+      isolation:isolate;
+      overflow:hidden;
+    }
+    .portal::before{
+      content:"";
+      position:absolute; inset:-6px;
+      background: conic-gradient(from 0deg, rgba(255,0,255,1), rgba(0,255,255,1), rgba(255,255,0,1), rgba(57,255,20,1), rgba(255,0,255,1));
+      opacity:.6;
+      filter: blur(8px);
+      animation: portalSpin 1.2s linear infinite;
+      z-index:-1;
+    }
+    .portal:hover{
+      transform: translateY(-2px) scale(1.03) rotate(-.3deg);
+      filter: saturate(180%) contrast(130%);
+    }
+    .portal:active{
+      transform: translateY(1px) scale(.98) rotate(.6deg);
+    }
+    @keyframes portalSpin{ to{ transform: rotate(360deg); } }
+
+    /* Infinite ticker */
+    .ticker{
+      position:sticky;
+      top:0;
+      z-index: 50;
+      background:
+        linear-gradient(90deg, rgba(255,0,255,.12), rgba(0,255,255,.10), rgba(255,255,0,.08), rgba(57,255,20,.08));
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 0 30px rgba(0,255,255,.10);
+      overflow:hidden;
+    }
+    .ticker .run{
+      display:flex;
+      white-space:nowrap;
+      gap: 40px;
+      padding: 10px 0;
+      will-change: transform;
+      animation: marquee 16s linear infinite;
+      font-family: "Monoton", system-ui, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      font-size: 12px;
+      color: rgba(255,255,255,.8);
+      text-shadow: 2px 0 0 rgba(255,0,255,.6), -2px 0 0 rgba(0,255,255,.6), 0 0 18px rgba(255,255,0,.20);
+    }
+    @keyframes marquee{
+      from{ transform: translateX(0); }
+      to{ transform: translateX(-50%); }
+    }
+    .ticker .run span{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding-left: 40px;
+    }
+
+    /* Sections: parallax layers */
+    main{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 10px 18px 120px;
+    }
+    section{
+      position:relative;
+      margin-top: 22px;
+      border-radius: 28px;
+      overflow:hidden;
+      box-shadow: 0 0 70px rgba(0,0,0,.55);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .section-inner{
+      position:relative;
+      padding: clamp(18px, 3vw, 34px);
+      min-height: 320px;
+      isolation:isolate;
+    }
+    .bg{
+      position:absolute; inset:-20%;
+      z-index:-2;
+      filter: blur(0px) saturate(160%);
+      transform: translate3d(0,0,0);
+      will-change: transform;
+    }
+    .bg.one{
+      background:
+        radial-gradient(900px 340px at 20% 20%, rgba(255,0,255,.35), transparent 65%),
+        radial-gradient(800px 400px at 80% 30%, rgba(0,255,255,.30), transparent 62%),
+        repeating-linear-gradient(45deg, rgba(255,255,255,.06) 0 2px, transparent 2px 8px),
+        linear-gradient(180deg, rgba(0,0,0,.65), rgba(0,0,0,.30));
+    }
+    .bg.two{
+      background:
+        conic-gradient(from 0deg, rgba(255,0,255,.22), rgba(0,255,255,.20), rgba(255,255,0,.16), rgba(57,255,20,.16), rgba(255,0,255,.22)),
+        radial-gradient(800px 460px at 50% 50%, rgba(0,0,0,.72), rgba(0,0,0,.25));
+      filter: blur(1px) saturate(180%);
+      animation: slowRotate 18s linear infinite;
+    }
+    @keyframes slowRotate { to{ transform: rotate(360deg); } }
+
+    .bg.three{
+      background:
+        radial-gradient(900px 500px at 35% 25%, rgba(57,255,20,.22), transparent 60%),
+        radial-gradient(900px 500px at 70% 70%, rgba(255,255,0,.20), transparent 60%),
+        repeating-radial-gradient(circle at 50% 50%, rgba(255,255,255,.06) 0 2px, transparent 2px 9px),
+        linear-gradient(180deg, rgba(0,0,0,.65), rgba(0,0,0,.30));
+      animation: breathe 5.5s ease-in-out infinite alternate;
+    }
+    @keyframes breathe{
+      from{ transform: scale(1) skewX(0deg); filter: saturate(160%) hue-rotate(0deg); }
+      to{ transform: scale(1.06) skewX(8deg); filter: saturate(190%) hue-rotate(80deg); }
+    }
+
+    /* Titles with “pulse + break” */
+    h2{
+      margin:0 0 10px;
+      font-family: "Nosifer", system-ui, sans-serif;
+      font-size: clamp(22px, 3vw, 44px);
+      font-weight: 400;
+      color: rgba(255,255,255,.9);
+      text-shadow: var(--glowA), var(--glowB), 0 0 35px rgba(0,0,0,.65);
+      animation: titlePulse 2.6s ease-in-out infinite;
+    }
+    @keyframes titlePulse{
+      0%{ transform: translate3d(0,0,0) rotateZ(0deg); filter: hue-rotate(0deg); }
+      50%{ transform: translate3d(0,-2px,0) rotateZ(-.4deg) skewX(2deg); filter: hue-rotate(120deg); }
+      100%{ transform: translate3d(0,0,0) rotateZ(0deg); filter: hue-rotate(360deg); }
+    }
+    p{
+      margin: 0 0 10px;
+      color: rgba(255,255,255,.82);
+      text-shadow: 0 0 18px rgba(0,255,255,.12);
+      max-width: 82ch;
+    }
+
+    /* Glitching boxes grid */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .card{
+      grid-column: span 6;
+      min-height: 130px;
+      border-radius: 18px;
+      padding: 14px 14px 12px;
+      position:relative;
+      overflow:hidden;
+      background:
+        linear-gradient(135deg, rgba(255,0,255,.15), rgba(0,255,255,.10), rgba(0,0,0,.55));
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: 0 0 35px rgba(255,0,255,.12), 0 0 28px rgba(0,255,255,.10);
+      backdrop-filter: blur(10px);
+      transform-style: preserve-3d;
+      animation: jitter 1.8s infinite steps(2,end);
+    }
+    .card::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: linear-gradient(90deg,
+        rgba(255,0,255,.0),
+        rgba(255,0,255,.35),
+        rgba(0,255,255,.35),
+        rgba(255,255,0,.25),
+        rgba(57,255,20,.25),
+        rgba(255,0,255,.0)
+      );
+      opacity:.55;
+      filter: blur(6px);
+      transform: translateX(-60%);
+      animation: scan 1.2s linear infinite;
+      mix-blend-mode: screen;
+    }
+    .card::after{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 6px);
+      opacity:.18;
+      mix-blend-mode: overlay;
+      pointer-events:none;
+    }
+    @keyframes scan{
+      to{ transform: translateX(60%); }
+    }
+    @keyframes jitter{
+      0%{ transform: translate3d(0,0,0) rotateX(0deg) rotateY(0deg); filter:hue-rotate(0deg); }
+      10%{ transform: translate3d(1px,-1px,0) rotateX(2deg) rotateY(-2deg) skewX(2deg); }
+      20%{ transform: translate3d(-2px,1px,0) rotateX(-2deg) rotateY(3deg); }
+      30%{ transform: translate3d(2px,2px,0) rotateX(3deg) rotateY(1deg) skewY(-2deg); }
+      40%{ transform: translate3d(-1px,-2px,0) rotateX(-3deg) rotateY(-1deg); }
+      50%{ transform: translate3d(0,0,0) rotateX(0deg) rotateY(0deg); filter:hue-rotate(120deg); }
+      100%{ filter:hue-rotate(360deg); }
+    }
+    .card h3{
+      margin: 0 0 8px;
+      font-family: "Creepster", system-ui, sans-serif;
+      letter-spacing: .06em;
+      font-size: 22px;
+      text-shadow: var(--glowB);
+    }
+    .card code{
+      display:inline-block;
+      padding: 3px 7px;
+      border-radius: 10px;
+      background: rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.9);
+      box-shadow: 0 0 18px rgba(0,255,255,.18);
+    }
+
+    /* 3D spinning rings / kaleidoscope */
+    .spin-zone{
+      margin-top: 18px;
+      display:flex;
+      flex-wrap:wrap;
+      gap: 14px;
+      align-items:stretch;
+    }
+    .ring{
+      flex: 1 1 240px;
+      min-height: 210px;
+      border-radius: 22px;
+      position:relative;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.14);
+      background: radial-gradient(300px 180px at 30% 35%, rgba(255,0,255,.25), transparent 60%),
+                  radial-gradient(320px 200px at 70% 60%, rgba(0,255,255,.22), transparent 60%),
+                  linear-gradient(180deg, rgba(0,0,0,.65), rgba(0,0,0,.35));
+      box-shadow: 0 0 45px rgba(0,255,255,.12), 0 0 55px rgba(255,0,255,.10);
+      perspective: 900px;
+    }
+    .ring .disc{
+      position:absolute; inset:-40%;
+      background:
+        conic-gradient(from 0deg, rgba(255,0,255,1), rgba(0,255,255,1), rgba(255,255,0,1), rgba(57,255,20,1), rgba(255,0,255,1));
+      filter: blur(0px) saturate(170%);
+      animation: discSpin 2.2s linear infinite, discWobble 3.6s ease-in-out infinite;
+      transform-style: preserve-3d;
+      border-radius: 50%;
+      opacity:.9;
+      mix-blend-mode: screen;
+    }
+    .ring .hole{
+      position:absolute; inset: 18%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 50%, rgba(0,0,0,.92), rgba(0,0,0,.35) 60%, transparent 72%);
+      box-shadow: inset 0 0 40px rgba(0,0,0,.9);
+    }
+    .ring .kalei{
+      position:absolute; inset:-30%;
+      background:
+        repeating-conic-gradient(from 0deg,
+          rgba(255,0,255,.95) 0 10deg,
+          rgba(0,255,255,.95) 10deg 20deg,
+          rgba(255,255,0,.85) 20deg 30deg,
+          rgba(57,255,20,.85) 30deg 40deg
+        );
+      opacity:.55;
+      filter: blur(.3px) saturate(190%) contrast(115%);
+      animation: kalei 5.5s linear infinite;
+      mix-blend-mode: overlay;
+    }
+    @keyframes discSpin{ to{ transform: rotate(360deg) translateZ(0); } }
+    @keyframes discWobble{
+      0%{ transform: rotate(0deg) rotateX(18deg) rotateY(-14deg) scale(1); }
+      50%{ transform: rotate(180deg) rotateX(-22deg) rotateY(18deg) scale(1.06); }
+      100%{ transform: rotate(360deg) rotateX(18deg) rotateY(-14deg) scale(1); }
+    }
+    @keyframes kalei{ to{ transform: rotate(360deg) scale(1.05); } }
+
+    /* Morphing shapes: animated border-radius + hue shift */
+    .morph-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .morph{
+      flex: 1 1 200px;
+      min-height: 170px;
+      border-radius: 38% 62% 48% 52% / 58% 42% 58% 42%;
+      background:
+        radial-gradient(circle at 30% 35%, rgba(255,0,255,.65), transparent 55%),
+        radial-gradient(circle at 70% 65%, rgba(0,255,255,.55), transparent 60%),
+        radial-gradient(circle at 45% 80%, rgba(255,255,0,.45), transparent 62%),
+        linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.25));
+      box-shadow: var(--glowA), var(--glowB), 0 0 60px rgba(57,255,20,.18);
+      border: 1px solid rgba(255,255,255,.12);
+      position:relative;
+      overflow:hidden;
+      animation: morph 4.4s ease-in-out infinite alternate, hue 3.2s linear infinite;
+      transform: translateZ(0);
+    }
+    .morph::before{
+      content:"";
+      position:absolute; inset:-30%;
+      background: conic-gradient(from 0deg, rgba(255,0,255,.85), rgba(0,255,255,.80), rgba(255,255,0,.70), rgba(57,255,20,.70), rgba(255,0,255,.85));
+      opacity:.55;
+      animation: spin 2.8s linear infinite;
+      mix-blend-mode: screen;
+      filter: blur(12px);
+    }
+    @keyframes spin{ to{ transform: rotate(360deg); } }
+    @keyframes hue{ to{ filter: hue-rotate(360deg) saturate(180%); } }
+    @keyframes morph{
+      0%{ border-radius: 38% 62% 48% 52% / 58% 42% 58% 42%; transform: rotate(-.8deg) scale(1) skewX(0deg); }
+      35%{ border-radius: 56% 44% 62% 38% / 44% 56% 38% 62%; transform: rotate(1.2deg) scale(1.04) skewX(6deg); }
+      70%{ border-radius: 64% 36% 44% 56% / 60% 40% 62% 38%; transform: rotate(-1.6deg) scale(.98) skewY(-6deg); }
+      100%{ border-radius: 42% 58% 36% 64% / 36% 64% 44% 56%; transform: rotate(1.8deg) scale(1.06) skewX(-8deg); }
+    }
+
+    /* Floating text sprites */
+    .float-field{
+      position:absolute; inset:0;
+      pointer-events:none;
+      z-index: 3;
+      overflow:hidden;
+    }
+    .float-word{
+      position:absolute;
+      font-family: "Monoton", system-ui, sans-serif;
+      font-size: 12px;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.55);
+      text-shadow: 2px 0 0 rgba(255,0,255,.55), -2px 0 0 rgba(0,255,255,.55), 0 0 20px rgba(255,255,0,.20);
+      filter: blur(.2px);
+      opacity:.9;
+      animation: drift var(--t) linear infinite;
+      transform: translate3d(0,0,0) rotateZ(var(--r));
+      mix-blend-mode: screen;
+    }
+    @keyframes drift{
+      from{ transform: translate3d(var(--x0), var(--y0),0) rotateZ(var(--r)) scale(var(--s)); }
+      to{ transform: translate3d(var(--x1), var(--y1),0) rotateZ(calc(var(--r) + 120deg)) scale(calc(var(--s) * 1.2)); }
+    }
+
+    /* Reality-bending: whole page micro-warp */
+    .warp{
+      animation: world 7s ease-in-out infinite;
+      transform-origin: 50% 20%;
+    }
+    @keyframes world{
+      0%{ transform: perspective(1200px) rotateX(0deg) rotateY(0deg) skewX(0deg); }
+      33%{ transform: perspective(1200px) rotateX(3deg) rotateY(-4deg) skewX(2deg); }
+      66%{ transform: perspective(1200px) rotateX(-4deg) rotateY(5deg) skewY(-2deg) scale(1.01); }
+      100%{ transform: perspective(1200px) rotateX(0deg) rotateY(0deg) skewX(0deg); }
+    }
+
+    /* Small responsive tweaks */
+    @media (max-width: 860px){
+      .card{ grid-column: span 12; }
+      .frame{ transform: none; }
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition: none !important; }
+      canvas.fx{ display:none; }
+    }
+  </style>
 </head>
+
 <body>
-    <h1>Minu Portfolio TTHK/TECHNOs õpitud ainetest:</h1>
-    <br/>
-    <p>
+
+<!-- FX layers (SAMAD) -->
+<canvas id="matrix" class="fx"></canvas>
+<canvas id="embers" class="fx"></canvas>
+<canvas id="trail" class="fx"></canvas>
+<div class="bg-blob"></div>
+<div class="bg-blob b2"></div>
+<div class="noise"></div>
+
+<!-- ticker (SAMAKS) -->
+<div class="ticker">
+  <div class="run" id="tickerRun">
+    <span>☣︎ ⌁ ⟁ ⧈ ⊗ ✶ ✹ ⟡ ⌬ ⛧ REALITY.EXE CORRUPTED ░░░</span>
+    <span>☣︎ ⌁ ⟁ ⧈ ⊗ ✶ ✹ ⟡ ⌬ ⛧ REALITY.EXE CORRUPTED ░░░</span>
+  </div>
+</div>
+
+<div class="wrap warp">
+<header class="hero">
+  <div class="frame">
+    <div class="content">
+
+      <!-- 🔴 SINU ORIGINAALNE H1 🔴 -->
+      <div class="glitch"
+        data-text="Minu Portfolio TTHK/TECHNOs õpitud ainetest:">
+        Minu Portfolio TTHK/TECHNOs õpitud ainetest:
+      </div>
+
+      <!-- 🔴 SINU ORIGINAALNE PARAGRAPH 🔴 -->
+      <div class="sub">
         Siin on minu eriala õpitud ainetest tehtud tööd, ja muud ülesannete väljundid
-    </p>
+      </div>
+
+      <!-- PORTALID JÄÄVAD -->
+      <div class="portals">
+        <button class="portal" data-portal="pinkCyan">PORTAL</button>
+        <button class="portal" data-portal="toxic">PORTAL</button>
+        <button class="portal" data-portal="random">PORTAL</button>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- 🔴 SINU ORIGINAALNE LIST 🔴 -->
+<section>
+  <div class="bg one" data-parallax="0.2"></div>
+  <div class="section-inner">
+    <h2>Õpitud ained</h2>
     <ul>
-        <li><a href="./SDLC.html">Tarkvara ArendusProtsess</a></li>
-        <li>Programmerimise Alused</li>
-        <li>Programmerimine 1</li>
-        <li>Multimeedia</li>
-        <li>Võrgurakendused</li>
-        <li>TVeebirankenduste loomise alused</li>
-        <li>Andmebaasi Süsteemide alused I & II</li>
-        <li>Mobiilirakendused</li>
+      <li><a href="./SDLC.html">Tarkvara ArendusProtsess</a></li>
+      <li>Programmerimise Alused</li>
+      <li>Programmerimine 1</li>
+      <li>Multimeedia</li>
+      <li>Võrgurakendused</li>
+      <li>TVeebirankenduste loomise alused</li>
+      <li>Andmebaasi Süsteemide alused I & II</li>
+      <li>Mobiilirakendused</li>
     </ul>
-    <br/> <br/>
-    ---------------------------------------------------------------
-    <br/><br/>
+  </div>
+</section>
+
+<!-- 🔴 SINU ORIGINAALNE TABEL 🔴 -->
+<section>
+  <div class="bg two" data-parallax="0.3"></div>
+  <div class="section-inner">
     <h2>Kes ma olen?</h2>
     <table>
-        <tr>
-            <td>Minu Nimi</td>
-            <td>George Teemus</td>
-        </tr>
-         <tr>
-            <td>Mida ma teen?</td>
-            <td>Olen kohalik koodiahv</td>
-        </tr>
-        <tr>
-            <td>Kust ma tulen?</td>
-            <td>Põrgunurk</td>
-        </tr>
-        <tr>
-            <td>Pilt</td>
-            <td><img src="/pildid/Nimetu.png" alt="aitab jamast"/></td>
-        </tr>
+      <tr><td>Minu Nimi</td><td>George Teemus</td></tr>
+      <tr><td>Mida ma teen?</td><td>Olen kohalik koodiahv</td></tr>
+      <tr><td>Kust ma tulen?</td><td>Põrgunurk</td></tr>
+      <tr>
+        <td>Pilt</td>
+        <td><img src="/pildid/Nimetu.png" alt="aitab jamast"></td>
+      </tr>
     </table>
+  </div>
+</section>
+
+</main>
+</div>
+
+<!-- ⚠️ JS ON 100% SAMA, EI MUUTNUD ⚠️ -->
+<script>
+    // ---------- Utility ----------
+    const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+    const rand = (a=0,b=1)=>a+Math.random()*(b-a);
+
+    // ---------- Parallax ----------
+    const parallaxLayers = [...document.querySelectorAll("[data-parallax]")];
+    const onScroll = () => {
+      const y = window.scrollY || 0;
+      for(const el of parallaxLayers){
+        const speed = parseFloat(el.dataset.parallax || "0.2");
+        el.style.transform = `translate3d(0, ${y * speed * -1}px, 0) rotate(${y*0.00008}turn)`;
+      }
+      // tiny world warp based on scroll for extra nausea
+      document.documentElement.style.setProperty("--warp", (y*0.06 % 360) + "deg");
+    };
+    window.addEventListener("scroll", onScroll, {passive:true});
+    onScroll();
+
+    // ---------- Floating Text ----------
+    const floatField = document.getElementById("floatField");
+    const words = [
+      "fracture","neon","echo","dream","glitch","portal","static","kaleidoscope","virus",
+      "afterimage","chromatic","drift","hypercolor","signal","void","ember","synthesis","warp"
+    ];
+    const makeFloatWord = () => {
+      const s = document.createElement("span");
+      s.className = "float-word";
+      s.textContent = words[(Math.random()*words.length)|0] + " " + ["⧈","✶","⌬","⟁","⊗","⟡","☣︎","✹"][Math.floor(rand(0,8))];
+      const t = rand(9, 18);
+      const x0 = rand(-10, 90), y0 = rand(10, 70);
+      const x1 = x0 + rand(-30, 30), y1 = y0 + rand(-55, -15);
+      s.style.setProperty("--t", t+"s");
+      s.style.setProperty("--x0", x0+"vw");
+      s.style.setProperty("--y0", y0+"vh");
+      s.style.setProperty("--x1", x1+"vw");
+      s.style.setProperty("--y1", y1+"vh");
+      s.style.setProperty("--r", rand(-20, 20)+"deg");
+      s.style.setProperty("--s", rand(0.8, 1.6));
+      s.style.opacity = rand(0.25, 0.9);
+      s.style.filter = `blur(${rand(0, 0.7)}px)`;
+      s.style.top = "0";
+      s.style.left = "0";
+      floatField.appendChild(s);
+      setTimeout(()=>s.remove(), (t*1000)+400);
+    };
+    for(let i=0;i<26;i++) setTimeout(makeFloatWord, i*120);
+    setInterval(makeFloatWord, 260);
+
+    // ---------- Portals (theme mutation) ----------
+    const root = document.documentElement;
+    const quake = () => {
+      const wrap = document.querySelector(".warp");
+      wrap.animate([
+        { transform: "perspective(1200px) rotateX(0deg) rotateY(0deg) skewX(0deg) scale(1)" },
+        { transform: `perspective(900px) rotateX(${rand(-6,6)}deg) rotateY(${rand(-8,8)}deg) skewX(${rand(-3,3)}deg) scale(${rand(1.0,1.02)})` },
+        { transform: "perspective(1200px) rotateX(0deg) rotateY(0deg) skewX(0deg) scale(1)" }
+      ], { duration: 520, easing: "cubic-bezier(.2,.9,.2,1)" });
+    };
+
+    const setPortal = (mode) => {
+      const presets = {
+        pinkCyan: { shift: rand(-20,20), sat: "175%", contrast:"130%", noise:.18 },
+        toxic:    { shift: 140 + rand(-30,30), sat: "200%", contrast:"145%", noise:.22 },
+        sunburn:  { shift: 60 + rand(-25,25), sat: "190%", contrast:"135%", noise:.20 },
+        void:     { shift: 220 + rand(-18,18), sat: "120%", contrast:"160%", noise:.14 },
+      };
+      let p;
+      if(mode === "random"){
+        p = { shift: rand(0,360), sat: rand(120,240).toFixed(0)+"%", contrast: rand(105,170).toFixed(0)+"%", noise: rand(0.12,0.28) };
+      } else {
+        p = presets[mode] || presets.pinkCyan;
+      }
+      root.style.setProperty("--portalShift", p.shift+"deg");
+      root.style.setProperty("--sat", p.sat);
+      root.style.setProperty("--contrast", p.contrast);
+      root.style.setProperty("--noiseOpacity", p.noise);
+      // also mutate ticker speed subtly
+      document.getElementById("tickerRun").style.animationDuration = rand(10, 22).toFixed(2) + "s";
+      quake();
+    };
+
+    document.querySelectorAll(".portal").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        setPortal(btn.dataset.portal);
+      });
+    });
+
+    // ---------- Canvas sizing ----------
+    function fitCanvas(c){
+      const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      c.width = Math.floor(innerWidth * dpr);
+      c.height = Math.floor(innerHeight * dpr);
+      const ctx = c.getContext("2d");
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      return ctx;
+    }
+
+    // ---------- Matrix Rain ----------
+    const matrix = document.getElementById("matrix");
+    let mctx = fitCanvas(matrix);
+    let mCols, mDrops, mFontSize;
+
+    function initMatrix(){
+      mctx = fitCanvas(matrix);
+      mFontSize = clamp(Math.floor(innerWidth / 80), 12, 18);
+      mCols = Math.floor(innerWidth / mFontSize);
+      mDrops = Array.from({length:mCols}, ()=> rand(-50, innerHeight/mFontSize));
+    }
+    initMatrix();
+
+    const glyphs = "アカサタナハマヤラワ0123456789⌁⟁⧈⊗✶✹⟡⌬☣︎";
+    function matrixTick(){
+      mctx.fillStyle = "rgba(0,0,0,0.08)";
+      mctx.fillRect(0,0,innerWidth,innerHeight);
+
+      for(let i=0;i<mCols;i++){
+        const x = i*mFontSize;
+        const y = mDrops[i]*mFontSize;
+        const ch = glyphs[(Math.random()*glyphs.length)|0];
+
+        // neon cycling
+        const r = (Math.sin((performance.now()/800)+i*0.1)*127+128)|0;
+        const g = (Math.sin((performance.now()/900)+i*0.12+2)*127+128)|0;
+        const b = (Math.sin((performance.now()/1000)+i*0.08+4)*127+128)|0;
+
+        mctx.font = `${mFontSize}px monospace`;
+        mctx.fillStyle = `rgba(${r},${g},${b},0.85)`;
+        mctx.shadowBlur = 14;
+        mctx.shadowColor = `rgba(${r},${g},${b},0.65)`;
+        mctx.fillText(ch, x, y);
+
+        if(y > innerHeight && Math.random() > 0.975) mDrops[i] = rand(-20, 0);
+        mDrops[i] += rand(0.6, 1.25);
+      }
+      requestAnimationFrame(matrixTick);
+    }
+    matrixTick();
+
+    // ---------- Embers / particles rising ----------
+    const embers = document.getElementById("embers");
+    let ectx = fitCanvas(embers);
+    let emberParticles = [];
+
+    function spawnEmber(){
+      emberParticles.push({
+        x: rand(0, innerWidth),
+        y: innerHeight + rand(0, 120),
+        vx: rand(-0.25, 0.25),
+        vy: rand(-1.6, -0.6),
+        r: rand(0.8, 2.6),
+        life: rand(120, 260),
+        hue: rand(0, 360)
+      });
+      if(emberParticles.length > 700) emberParticles.splice(0, 120);
+    }
+
+    for(let i=0;i<220;i++) spawnEmber();
+    function embersTick(){
+      // fade to create trails
+      ectx.fillStyle = "rgba(0,0,0,0.10)";
+      ectx.fillRect(0,0,innerWidth,innerHeight);
+
+      for(const p of emberParticles){
+        p.x += p.vx + Math.sin(p.y*0.01)*0.15;
+        p.y += p.vy;
+        p.life -= 1;
+
+        const a = clamp(p.life/260, 0, 1);
+        ectx.beginPath();
+        ectx.fillStyle = `hsla(${(p.hue + performance.now()*0.05)%360}, 100%, 70%, ${0.65*a})`;
+        ectx.shadowBlur = 18;
+        ectx.shadowColor = `hsla(${(p.hue + 60)%360}, 100%, 60%, ${0.65*a})`;
+        ectx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ectx.fill();
+
+        if(p.y < -40 || p.life <= 0){
+          p.x = rand(0, innerWidth);
+          p.y = innerHeight + rand(0, 140);
+          p.vx = rand(-0.25, 0.25);
+          p.vy = rand(-1.8, -0.7);
+          p.r  = rand(0.8, 2.8);
+          p.life = rand(140, 280);
+          p.hue = rand(0, 360);
+        }
+      }
+
+      if(Math.random() < 0.45) spawnEmber();
+      requestAnimationFrame(embersTick);
+    }
+    embersTick();
+
+    // ---------- Cursor trail particles ----------
+    const trail = document.getElementById("trail");
+    let tctx = fitCanvas(trail);
+    let trailPts = [];
+    let mouse = {x: innerWidth/2, y: innerHeight/2, vx:0, vy:0};
+
+    window.addEventListener("pointermove", (e)=>{
+      const nx = e.clientX, ny = e.clientY;
+      mouse.vx = nx - mouse.x;
+      mouse.vy = ny - mouse.y;
+      mouse.x = nx; mouse.y = ny;
+
+      for(let i=0;i<5;i++){
+        trailPts.push({
+          x: nx + rand(-6,6),
+          y: ny + rand(-6,6),
+          vx: rand(-0.7, 0.7) + mouse.vx*0.02,
+          vy: rand(-0.7, 0.7) + mouse.vy*0.02,
+          r: rand(1.0, 3.0),
+          life: rand(30, 70),
+          hue: (performance.now()*0.12 + rand(-40,40))%360
+        });
+      }
+      if(trailPts.length > 900) trailPts.splice(0, 200);
+    }, {passive:true});
+
+    function trailTick(){
+      tctx.fillStyle = "rgba(0,0,0,0.14)";
+      tctx.fillRect(0,0,innerWidth,innerHeight);
+
+      for(const p of trailPts){
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vx *= 0.985;
+        p.vy *= 0.985;
+        p.life -= 1;
+
+        const a = clamp(p.life/70, 0, 1);
+        tctx.beginPath();
+        tctx.fillStyle = `hsla(${p.hue}, 100%, 70%, ${0.9*a})`;
+        tctx.shadowBlur = 24;
+        tctx.shadowColor = `hsla(${(p.hue+120)%360}, 100%, 60%, ${0.7*a})`;
+        tctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        tctx.fill();
+      }
+      trailPts = trailPts.filter(p=>p.life>0);
+      requestAnimationFrame(trailTick);
+    }
+    trailTick();
+
+    // ---------- Resize ----------
+    let resizeT;
+    window.addEventListener("resize", ()=>{
+      clearTimeout(resizeT);
+      resizeT = setTimeout(()=>{
+        mctx = fitCanvas(matrix);
+        ectx = fitCanvas(embers);
+        tctx = fitCanvas(trail);
+        initMatrix();
+      }, 100);
+    });
+
+    // ---------- Periodic micro “reality fractures” ----------
+    setInterval(()=>{
+      // small random pulse on root filter + noise
+      const n = parseFloat(getComputedStyle(root).getPropertyValue("--noiseOpacity")) || 0.18;
+      root.style.setProperty("--noiseOpacity", clamp(n + rand(-0.03, 0.05), 0.10, 0.32));
+      if(Math.random() < 0.35) quake();
+    }, 1800);
+
+    // Kick it off with a palette
+    setPortal("pinkCyan");
+  </script>
+
 </body>
 </html>
