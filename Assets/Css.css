@@ -1,0 +1,34 @@
+/* Määrab põhivärvi kogu lehele */
+body {
+    color: white;
+    background-color: black; /* Tagab, et kui canvas ei lae, on taust ikka tume */
+    font-family: 'Courier New', Courier, monospace; /* Matrixi stiiliga sobiv font */
+}
+
+/* Teeb pealkirjad valgeks */
+h1, h2 {
+    color: white;
+}
+
+/* Teeb lingid valgeks või heleroheliseks, et need Matrixiga sobiksid */
+a {
+    color: #00FF00; /* Matrixi roheline */
+    text-decoration: none;
+}
+
+a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+/* Kui soovid ka tabeli piirjooni näha */
+table, td, th {
+    border: 1px solid white;
+    border-collapse: collapse;
+    padding: 10px;
+}
+
+/* Juhuks kui su .glitch efekt vajab eraldi värvi */
+.glitch {
+    color: white !important;
+}
