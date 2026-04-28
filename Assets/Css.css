@@ -1,0 +1,149 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Full-screen matrix canvas */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+/* Matrix colors & font */
+body {
+  background: black;
+  color: #00ff00;
+  font-family: "Courier New", monospace;
+  overflow: hidden;
+}
+
+/* Center content */
+.content {
+  position: relative;
+  text-align: center;
+  top: 40px;
+}
+
+/* Green links */
+a {
+  color: #00ff00;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+a:hover {
+  text-shadow: 0 0 10px #00ff00;
+}
+
+.glitch {
+  position: relative;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #00ff00;
+  text-transform: uppercase;
+}
+
+/* MATRIX LINKS – readable & clickable */
+li {
+  list-style: none;
+  margin: 12px 0;
+}
+
+a {
+  color: #00ff88;                  /* brighter green */
+  font-size: 1.2rem;
+  text-decoration: none;
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 2;                      /* ABOVE canvas */
+  padding: 4px 8px;
+}
+
+a:hover {
+  color: #b6ff00;
+  text-shadow:
+    0 0 5px #00ff88,
+    0 0 10px #00ff88,
+    0 0 20px #00ff88;
+}
+
+/* Duplicate layers */
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Red/green offset layers */
+.glitch::before {
+  color: #00ff00;
+  animation: glitchTop 1.5s infinite linear;
+}
+
+.glitch::after {
+  color: #00aa00;
+  animation: glitchBottom 1.2s infinite linear;
+}
+
+/* KEYFRAMES */
+@keyframes glitchTop {
+  0% {
+    clip-path: inset(0 0 90% 0);
+    transform: translate(-2px, -2px);
+  }
+  20% {
+    clip-path: inset(0 0 60% 0);
+    transform: translate(2px, 2px);
+  }
+  40% {
+    clip-path: inset(0 0 30% 0);
+    transform: translate(-1px, 1px);
+  }
+  60% {
+    clip-path: inset(0 0 50% 0);
+    transform: translate(1px, -1px);
+  }
+  80% {
+    clip-path: inset(0 0 20% 0);
+    transform: translate(-2px, 0);
+  }
+  100% {
+    clip-path: inset(0 0 90% 0);
+    transform: translate(0);
+  }
+}
+
+@keyframes glitchBottom {
+  0% {
+    clip-path: inset(80% 0 0 0);
+    transform: translate(2px, 2px);
+  }
+  20% {
+    clip-path: inset(60% 0 0 0);
+    transform: translate(-2px, -2px);
+  }
+  40% {
+    clip-path: inset(30% 0 0 0);
+    transform: translate(1px, -1px);
+  }
+  60% {
+    clip-path: inset(50% 0 0 0);
+    transform: translate(-1px, 1px);
+  }
+  80% {
+    clip-path: inset(20% 0 0 0);
+    transform: translate(2px, 0);
+  }
+  100% {
+    clip-path: inset(80% 0 0 0);
+    transform: translate(0);
+  }
+}
