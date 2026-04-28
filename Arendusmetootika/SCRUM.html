@@ -1,64 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="et">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ainemapp</title>
-    <script src=" ../Assets/js.js"></script>
-    <link rel="stylesheet" href="../Assets/Css.css">
-
+    <title>Ainemapp - Agiilsed meetodid ja SCRUM</title>
 </head>
 <body>
-    <h1>SCRUM arendusmudel</h1>
-    <p>
-        SCRUM on Arendusmetootika aka agiilne meeskonnatöö raamistik, mida tavaliselt kasutatakse tarkvaraarenduses</br>
-        ja teistes tööstusharudes SCRUM näeb ennast ette, et meeskonnad jagavad oma töö ajaliselt piiratud iteratsioonideks</br>
-        ehk eesmärkideks mida nad see järel hakkavad kiiresti tegema ehk sprintima. Sprint ei kesta kauem kui 1 kuu ja </br>
-        tavaliselt kestab sprint 2 nädalat. SCRUM-i tiim hindab edusamme ajaliselt piiratud kuni 15-minutilistes püsti</br>
-        seistes toimuvatel koosolekutel, mida nimetatakse igapäevasteks scrumideks. </br>
-    </p>
-    </br></br>
-    <h2>Etapid</h2>
-    <ol>
-        <li><strong>Töö jaotamine osadeks</strong>Meeskond jaotab töö osadeks mida seejärel hakktakase lahendama</li>
-        <li><strong>Sprint</strong> Töö osad ehk sprint kestab 2 nädalat kuni 1 kuu.</li>
-        <li><strong>Seisev koosolek</strong> Peale igat sprindi perjoodi tuleb Seisev töökoosoleks kus räägitakse 15 minutit saavutustest.</li>
-        <li><strong>Sprindi lõpp</strong>Peale sprindi lõppu tuimub 2 viimast(pikkemat) koosolekut .</li>
-        <li><strong>Koosolek osaomanikkudega</strong> Koosolek osaomanikkudega kus näitavad valminud tööd ja saavad tagasiside.</li>
-        <li><strong>Sprindi lõpp kokkutulemus</strong>Viimane koosolek sprindi kohta ja selle lõppu.</li>
-    </ol>
-    </br> </br>   
-    <h2>Scrumi meeskond</h2>
-    <p>
-        Scrumi meeskond on organiseeritud vähemalt kolme kateegooriasse kuuluvate inimeste hulka.</br>
-        Esimene on tooteomanik, tooteomaniu töö on suhelda sidusrühmadega ehk nendega kes on projekt</br>
-        tulemustest huvitatud, et edastada arendajatele ülesandeid ja ootusi. Järgmisena on arendajad, arendajate </br>
-        ülesanne on korraldada tööd ise endale scrumi meistri juhendamisel.</br>
-    </p>
-    </br></br>
-    <h2>Toote omanik</h2>
-    <p>
-        Igal Scrumi meeskonnal on olemas Tooteomanik. Tooteomanik keskendub tootearendusele, ärilisele</br>
-        poolele ja veel veedab suurema osa ajas sidusrühmade(Projekti tulemustest huvitatud isikud) </br>
-        ja meeskonnaga suhtlemisel. Selle rolli eesmärk on esindada peamiselt toote sidurühmi, klendi häält </br>
-        või komitee soove ning ta vastutab äritulemuste saavutamise eest. Tooteomaniku peamine töö ongi projekti </br>
-        ennast klienditele pakkuda ja saada tagasisetet mida proejkti arendus tiimile edasi anda.</br>
-    </p>
-</br></br>
-    <h2>Arendajad</h2>
-    <p>
-        Igal Scrumi meeskonnal on ka arendajad, arendajad on need kes loovad projekti Toote omaniku ja scrumi meistri</br>
-        soovitustek ja palvetel. Arendajad on ka kõik kellel on mingi roll toote arendamises ja toetamses ning</br>
-        võivad hõlmata teadlasi, arhitekte, disainereid, programmeerijaid jne.</br>
-    </p>
-</br></br>
-    <h2>Scrumi meister</h2>
-    <p>
-        Scrumi meister on see kes aitab meeskonnal järgida scrumi teooriat, praktikaid ja reegleid. Scrumi meister on ka see kes</br>
-        aitab meeskonnal eemaldada takistusi, mis võivad tekkida projekti arendamisel. Scrumi meister on ka see kes aitab meeskonnal</br>
-        korraldada koosolekuid ja üritusi ning aitab meeskonnal saavutada parimaid tulemusi.</br>
-    </p>
-</br></br>
+
+    <h1>Agiilsed arendusmetoodikad ja SCRUM</h1>
+
+    <h2>Indeks</h2>
+    <ul>
+        <li><a href="#agiilne-info">Mis on Agiilsed Arendusmetoodikad ja nende põhieesmärk</a></li>
+        <li><a href="#alustalad-printsiibid">Agiilse arenduse 4 alustala ja 12 printsiipi koos näidetega</a></li>
+        <li><a href="#kasutusvaldkond">Millal saab ja millal ei saa agiilseid meetodeid kasutada</a></li>
+        <li><a href="#scrum-syva">SCRUM arendusmetoodika täielik kirjeldus (rollid, tsükkel, artefaktid)</a></li>
+        <li><a href="#allikad">Viited ja allikad</a></li>
+    </ul>
+
+    <h2 id="agiilne-info">Mis on Agiilsed Arendusmetoodikad?</h2>
+    <p>Agiilsed meetodid (Agile) on iteratiivne lähenemine tarkvaraarendusele, mille põhieesmärk on tarnida väärtust kiiresti, reageerida muutustele ja kaasata klienti pidevalt. See vastandub kangele "kosk-mudelile", kus kõik planeeritakse alguses lukku.</p>
+
+    <h2 id="alustalad-printsiibid">4 alustala ja 12 printsiipi</h2>
+    <p><strong>Agiilse arenduse 4 alustala:</strong></p>
+    <ul>
+        <li>Inimesed ja suhtlus > protsessid (Näide: tiim arutab mure kohe läbi, mitte ei oota järgmise kuu koosolekut).</li>
+        <li>Töötav tarkvara > põhjalik dokumentatsioon (Näide: klient saab näha töötavat demo, mitte ainult 100-leheküljelist juhendit).</li>
+        <li>Koostöö kliendiga > lepingulised läbirääkimised (Näide: klient on kaasatud arendusse ja saab jooksvalt soove muuta).</li>
+        <li>Reageerimine muutustele > plaani järgimine (Näide: kui turg muutub, muudab tiim suunda, mitte ei tee vana plaani lõpuni).</li>
+    </ul>
+    <p><strong>12 printsiipi lühidalt:</strong> Kliendi rahulolu läbi varajase tarnimise, muutuste tervitamine, sagedane tarkvaratarne, igapäevane koostöö, motiveeritud inimesed, näost-näkku suhtlus, töötav tarkvara kui edumõõdik, jätkusuutlik tempo, tehniline kvaliteet, lihtsus, iseorganiseeruvad tiimid ja regulaarne enesepeegeldus.</p>
+
+    <h2 id="kasutusvaldkond">Kuna saab ja kuna ei saa agiilseid meetodeid kasutada?</h2>
+    <p><strong>Saab kasutada:</strong> Kui nõuded on muutlikud, klient on kättesaadav ja valmis koostööks, projekt on jaotatav väikesteks osadeks (nt veebirakendused, e-poed).</p>
+    <p><strong>Ei saa kasutada:</strong> Kui nõuded on seadusega rangelt paigas (nt lennundustarkvara, meditsiin), klient ei soovi protsessis osaleda või kui projekt on nii väike, et agiilsuse halduskoormus käib üle jõu.</p>
+    <h2 id="scrum-syva">SCRUM arendusmetoodika täielik kirjeldus</h2>
+    <p>SCRUM on kõige levinum arendusmeetod, sest see on kergekaaluline, selgete reeglitega ja aitab keerulisi probleeme lahendada efektiivselt.</p>
+
+    <h3>Rollid</h3>
+    <ul>
+        <li><strong>Tooteomanik (Product Owner):</strong> Vastutab toote väärtuse maksimeerimise eest ja haldab tööde nimekirja (Backlog).</li>
+        <li><strong>Scrummeister (Scrum Master):</strong> Vastutab Scrumi protsessi toimimise eest ja eemaldab meeskonna teelt takistused.</li>
+        <li><strong>Arendajad:</strong> Meeskond, kes teeb reaalse töö ära ja planeerib oma tegevust ise.</li>
+    </ul>
+
+    <h3>Arendustsükkel ja koosolekud</h3>
+    <p>Töö toimub tsüklitena, mida nimetatakse <strong>Sprintideks</strong> (kestus tavaliselt 2-4 nädalat).</p>
+    <ul>
+        <li><strong>Sprint Planning:</strong> Koosolek sprindi alguses, kus valitakse Backlogist tööd ja seatakse eesmärk.</li>
+        <li><strong>Daily Standup (Igapäevane Scrum):</strong> Max 15 min seisev koosolek edusammude arutamiseks. Vastatakse 3-le küsimusele:
+            <ol>
+                <li>Mida ma tegin eile?</li>
+                <li>Mida ma teen täna?</li>
+                <li>Millised on minu takistused?</li>
+            </ol>
+        </li>
+        <li><strong>Sprint Review:</strong> Sprindi lõpus toimuv koosolek, kus näidatakse valminud tööd kliendile/sidusrühmadele.</li>
+        <li><strong>Sprint Retrospective:</strong> Meeskonna arutelu selle üle, kuidas koostööd järgmises sprindis parandada.</li>
+    </ul>
+
+    <h3>Artefaktid</h3>
+    <ul>
+        <li><strong>Product Backlog:</strong> Prioritiseeritud nimekiri kõigist toote jaoks vajalikest omadustest.</li>
+        <li><strong>Sprint Backlog:</strong> Valik ülesandeid Product Backlogist, mis plaanitakse praeguses sprindis valmis saada.</li>
+        <li><strong>Increment (Juurdekasv):</strong> Sprindi lõpuks valminud ja testitud toote osa, mis on kasutatav.</li>
+    </ul>
+
+    <p><strong>Miks on SCRUM kõige levinum?</strong> See pakub selget struktuuri (rollid ja koosolekud), võimaldab kiiresti vigadest õppida ja annab meeskonnale suurema vastutuse, mis tõstab motivatsiooni.</p>
+
+    <hr>
+
+    <h2 id="allikad">Viited ja allikad</h2>
+    <ul>
+        <li><a href="https://agilemanifesto.org/" target="_blank">Agile Manifesto (4 alustala ja 12 printsiipi)</a></li>
+        <li><a href="https://en.wikipedia.org/wiki/Agile_software_development" target="_blank">Wikipedia: Agile development</a></li>
+        <li><a href="https://scrumguides.org/" target="_blank">The Scrum Guide (Ametlik juhend)</a></li>
+        <li><a href="https://www.atlassian.com/agile/scrum" target="_blank">Atlassian: Scrum guide ja populaarsuse põhjused</a></li>
+        <li><a href="https://www.scrum.org/resources/what-is-scrum" target="_blank">Scrum.org: What is Scrum?</a></li>
+    </ul>
 
 </body>
 </html>
