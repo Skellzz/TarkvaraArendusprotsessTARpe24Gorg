@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/style.css">
+    <title>ERD Diagramm</title>
+</head>
+<body class="light-mode">
+    <header>
+        <h1>UML > ERD (Entity-Relationship Diagram)</h1>
+        <p>ERD on mudel andmebaaside struktuuri ja tabelite vaheliste loogiliste seoste visuaalseks projekteerimiseks.</p>
+    </header>
+    
+    <nav>
+        <a href="UML.html">Tagasi UML Indeksisse</a> | <a href="FLOWCHART.html">Flowchart Skeem</a>
+    </nav>
+    
+    <main>
+        <section>
+            <h2>Mis on ERD ja kus seda kasutatakse?</h2>
+            <p>ERD ehk olemi-seose diagramm kirjeldab andmebaasi tabeleid (olemeid) ning nende omavahelisi suhteid. Seda kasutatakse infosüsteemide arendamisel andmebaasi arhitektuuri planeerimiseks ja andmete terviklikkuse tagamiseks.</p>
+        </section>
+
+        <section>
+            <h2>Seoste otsad ja tähendused (Crow's Foot)</h2>
+            <p>Seoste otsad määravad ära kordsuse (mitu rida saab kahe tabeli vahel seotud olla):</p>
+            <div class="diagram"><pre>
+  ||--------|{   --> Üks-mitmele (One-to-Many) | Nt: Ühel kliendil on mitu tellimust.
+  ||--------||   --> Üks-ühele (One-to-One)   | Nt: Ühel kasutajal on üks profiil.
+            </pre></div>
+            <ul>
+                <li><strong>Püstkriips ( | ):</strong> Tähendab "üks" (andmerida on kohustuslik).</li>
+                <li><strong>Harali ots ( { ):</strong> Tähendab "mitu" (varesetala ehk crow's foot märk).</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Mis on olemitabelis ja mis on võtmed?</h2>
+            <p>Olemitabel kujutab andmebaasi tabelit, mis sisaldab nime, atribuute (väljasid/veerge) ja andmetüüpe (nt INT, VARCHAR). Tabelites kasutatakse unikaalsuse hoidmiseks spetsiaalseid võtmeid:</p>
+            <ul>
+                <li><strong>Key (Võti):</strong> Üldine termin veeru kohta, mida kasutatakse andmete otsimiseks või indekseerimiseks.</li>
+                <li><strong>Primary Key (PK - Primaarvõti):</strong> Unikaalne rida tuvastav tunnus (nt <code>kasutaja_id</code>). Ei tohi korduda ega olla tühi (NULL).</li>
+                <li><strong>Foreign Key (FK - Välisvõti):</strong> Väli ühes tabelis, mis viitab teise tabeli primaarvõtmele, tekitades tabelite vahele seose.</li>
+                <li><strong>Composite Key (Liitvõti):</strong> Kahest või enamast veerust koosnev primaarvõti (kasutatakse tihti vahetabelites).</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Võtmete kasutusnäide olemitabelitega</h2>
+            <div class="diagram"><pre>
++-----------------------+            +-----------------------+
+|       KASUTAJA        |            |        TELLIMUS       |
++-----------------------+            +-----------------------+
+| PK | kasutaja_id: INT | ||------|{ | PK | tellimus_id: INT |
+|    | nimi: VARCHAR    |            | FK | kasutaja_id: INT |
++-----------------------+            +-----------------------+
+            </pre></div>
+            <p>Välisvõti (FK) tellimuse tabelis on seotud kasutaja primaarvõtmega (PK). See seos tagab andmete terviklikkuse – süsteem ei luba luua tellimust kasutajale, keda pole andmebaasis reaalselt olemas.</p>
+        </section>
+
+        <section>
+            <h2>Viited infoallikaile</h2>
+            <ul>
+                <li><a href="https://www.w3schools.com/sql/" target="_blank">W3Schools SQL ja Andmebaasid</a></li>
+                <li><a href="https://www.lucidchart.com/pages/er-diagrams" target="_blank">Lucidchart ERD Guide</a></li>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
