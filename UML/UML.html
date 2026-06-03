@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/style.css">
+    <title>UML Indeks</title>
+</head>
+<body class="light-mode">
+    <header>
+        <h1>Unified Modeling Language (UML)</h1>
+        <p>UML on standardne visuaalne keel tarkvarasüsteemide struktuuri ja käitumise planeerimiseks ning dokumenteerimiseks.</p>
+    </header>
+    
+    <nav>
+        <a href="#usecase">Use Case</a> | <a href="#class">Class</a> | 
+        <a href="#sequence">Sequence</a> | <a href="#state">State</a> | 
+        <a href="#activity">Activity</a> | <a href="#component">Component</a>
+    </nav>
+    
+    <main>
+   
+            <h3>Spetsiifilised diagrammid väljaspool indeksit:</h3>
+            <ul>
+                <li><a href="./ERD.html">UML &gt; ERD Diagramm</a> - Andmebaaside struktuur</li>
+                <li><a href="./FLOWCHART.html">UML &gt; Flowchart (Vooskeem)</a> - Protsesside loogika</li>
+            </ul>
+        </section>
+
+        <section id="usecase">
+            <h2>1. Use Case Diagram (Kasutuslugu)</h2>
+            <p><strong>Kirjeldus:</strong> Näitab süsteemi funktsionaalsust lõppkasutaja vaatenurgast ehk mida süsteem teha võimaldab.</p>
+            <p><strong>Elemendid:</strong> Actor (kasutaja/väline süsteem), Use Case (ovaalne tegevus), Joon (seos osaleja ja tegevuse vahel).</p>
+            <div class="diagram"><pre>
+[Kasutaja] --------> ( Lisa toode ostukorvi )
+            </pre></div>
+        </section>
+    
+        <section id="class">
+            <h2>2. Class Diagram (Klassidiagramm)</h2>
+            <p><strong>Kirjeldus:</strong> Süsteemi struktuurne mudel, mis näitab klasse, nende andmeid (atribuudid) ja funktsioone (meetodid).</p>
+            <p><strong>Elemendid:</strong> Kolmeks jagatud kast (Nimi, Atribuudid, Meetodid), tühja otsaga nool (pärilus ehk inheritance).</p>
+            <div class="diagram"><pre>
++-----------------------+
+|        Kasutaja       |
++-----------------------+
+| - kasutajanimi: String|
++-----------------------+
+| + logiSisse(): void   |
++-----------------------+
+            </pre></div>
+        </section>
+    
+        <section id="sequence">
+            <h2>3. Sequence Diagram (Järjestusdiagramm)</h2>
+            <p><strong>Kirjeldus:</strong> Näitab objektide ja komponentide vahelist suhtlust kronoloogilises ehk ajalises järjestuses.</p>
+            <p><strong>Elemendid:</strong> Lifeline (katkendjoon, mis näitab objekti aega), pidev joon (päring/tegevus), katkendjoon (vastus).</p>
+            <div class="diagram"><pre>
+Kasutaja           Veebileht
+   |                   |
+   |--- logiSisse() -->|
+   |&lt;-- Edukas/Viga ---|
+            </pre></div>
+        </section>
+    
+        <section id="state">
+            <h2>4. State Diagram (Olekudiagramm)</h2>
+            <p><strong>Kirjeldus:</strong> Kirjeldab ühe kindla objekti elutsüklit, selle võimalikke olekuid ja sündmusi, mis olekut muudavad.</p>
+            <p><strong>Elemendid:</strong> Ring (algus/lõpp), ümar ristkülik (olek), nool (üleminek koos sündmusega).</p>
+            <div class="diagram"><pre>
+(Algus) --> [ Konto ootel ] --(Kinnita meil)--> [ Konto aktiivne ]
+            </pre></div>
+        </section>
+    
+        <section id="activity">
+            <h2>5. Activity Diagram (Tegevusdiagramm)</h2>
+            <p><strong>Kirjeldus:</strong> Dünaamiline diagramm, mis näitab süsteemi tegevuste ja sammude voogu (sarnane vooskeemile).</p>
+            <p><strong>Elemendid:</strong> Ümar kast (tegevus), romb (otsustuskoht/tingimus hargnevate teedega Jah/Ei).</p>
+            <div class="diagram"><pre>
+[ Ava äpp ] --> { Kas logitud? } --Jah--> [ Kuva sisu ]
+                       |
+                      Ei --> [ Kuva sisselogimine ]
+            </pre></div>
+        </section>
+
+        <section id="component">
+            <h2>6. Component Diagram (Komponendidiagramm)</h2>
+            <p><strong>Kirjeldus:</strong> Struktuurikomponentide diagramm, mis näitab koodimoodulite, API-de või andmebaaside vahelisi tehnilisi sõltuvusi.</p>
+            <p><strong>Elemendid:</strong> Kast (komponent/moodul), nool (sõltuvus ehk liides teise komponendiga).</p>
+            <div class="diagram"><pre>
+[ Kliendiliides ] --(REST API)--> [ Maksete moodul ]
+            </pre></div>
+        </section>
+    </main>
+
+    <hr>
+    <footer>
+        <h3>Ainemapi osad:</h3>
+        <ul>
+            <li><a href="./ERD.html">ERD diagramm</a></li>
+            <li><a href="./FLOWCHART.html">Flowchart (Vooskeem)</a></li>
+        </ul>
+    </footer>
+</body>
+</html>
