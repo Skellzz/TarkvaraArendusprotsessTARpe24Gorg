@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/style.css">
+    <title>Flowchart Diagramm</title>
+</head>
+<body class="light-mode">
+    <header>
+        <h1>UML > Flowchart (Vooskeem)</h1>
+        <p>Flowchart ehk vooskeem kujutab algoritmi, protsessi või koodi töövoogu samm-sammuliselt.</p>
+    </header>
+    
+    <nav>
+        <a href="UML.html">Tagasi UML Indeksisse</a> | <a href="ERD.html">ERD Skeem</a>
+    </nav>
+    
+    <main>
+        <section>
+            <h2>Mis on Flowchart ja kus seda kasutatakse?</h2>
+            <p>Vooskeem on graafiline diagramm, mis kirjeldab tegevuste järjekorda ülalt alla või vasakult paremale. Seda kasutatakse programmeerimises rakenduse või algoritmi loogika planeerimiseks ja läbimõtlemiseks enne koodi kirjutamist, samuti äriprotsesside kaardistamiseks.</p>
+        </section>
+
+        <section>
+            <h2>Kujundite tähendused ja kasutus</h2>
+            <ul>
+                <li><strong>Ovaal (Terminaator):</strong> Tähistab alati protsessi algust (START) või lõppu (END).</li>
+                <li><strong>Ristkülik (Protsess):</strong> Tähistab standardset tegevust, operatsiooni või matemaatilist arvutust.</li>
+                <li><strong>Romb (Otsustuskoht):</strong> Kujutab tingimust (koodis <code>if/else</code>). Sellest hargneb voog alati vastavalt tulemusele kaheks: "Jah" või "Ei".</li>
+                <li><strong>Parallelogramm (Sisend/Väljund):</strong> Näitab andmete lugemist kasutajalt või tulemuste kuvamist ekraanile.</li>
+                <li><strong>Nooled:</strong> Määratlevad protsessi täitmise täpse suuna.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Praktiline näide: Bitcoin Kalkulaator</h2>
+            <p>Eelnevalt loodud Bitcoin kalkulaatori rakenduse loogika ja töövoog:</p>
+            <div class="diagram"><pre>
+       ( START )
+           |
+           v
+   [/ Sisesta EUR summa /]
+           |
+           v
+   { Kas kurss laeti edukalt? }
+        /                 \
+     [Jah]               [Ei]
+      |                   |
+      v                   v
+[ Arvuta: BTC = EUR/kurss ] [ Kuva viga ]
+      |                   |
+      v                   |
+   [/ Kuva tulemus /] <---+
+           |
+           v
+        ( END )
+            </pre></div>
+            <p>Selle skeemi alusel ehitasime kalkulaatori funktsionaalsuse, kus programm kontrollib rombi sees veebipäringu edukust ning teeb vastavalt sellele matemaatilise tehte või kuvab kasutajale veateate.</p>
+        </section>
+
+        <section>
+            <h2>Viited infoallikaile</h2>
+            <ul>
+                <li><a href="https://www.draw.io" target="_blank">Draw.io joonistamise tööriist</a></li>
+                <li><a href="https://www.geeksforgeeks.org/what-is-a-flowchart/" target="_blank">GeeksforGeeks Flowchart Guide</a></li>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
