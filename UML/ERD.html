@@ -11,43 +11,52 @@
         <h1>UML > ERD (Entity-Relationship Diagram)</h1>
         <p>ERD on mudel andmebaaside struktuuri ja tabelite vaheliste loogiliste seoste visuaalseks projekteerimiseks.</p>
     </header>
-    
-    <nav>
-        <a href="UML.html">Tagasi UML Indeksisse</a> | <a href="FLOWCHART.html">Flowchart Skeem</a>
-    </nav>
-    
     <main>
         <section>
-            <h2>Mis on ERD ja kus seda kasutatakse?</h2>
-            <p>ERD ehk olemi-seose diagramm kirjeldab andmebaasi tabeleid (olemeid) ning nende omavahelisi suhteid. Seda kasutatakse infosüsteemide arendamisel andmebaasi arhitektuuri planeerimiseks ja andmete terviklikkuse tagamiseks.</p>
+            <h2>Mis on ERD, millal see loodi ja kus seda kasutatakse?</h2>
+            <p>ERD ehk olemi-seose diagramm (Entity-Relationship Diagram) on graafiline mudel, mis kirjeldab andmebaasi tabeleid (olemeid) ning nende omavahelisi suhteid. ERD kontseptsiooni lõi ja formuleeris arvutiteadlane <strong>Peter Chen 1976. aastal</strong>.</p>
+            <p>Seda kasutatakse laialdaselt infosüsteemide arendamisel ja andmebaaside projekteerimisel, et planeerida andmebaasi arhitektuuri enne reaalset koodi kirjutamist, tagada andmete loogiline puhtus ning vältida dubleerimist.</p>
         </section>
 
         <section>
-            <h2>Seoste otsad ja tähendused (Crow's Foot)</h2>
-            <p>Seoste otsad määravad ära kordsuse (mitu rida saab kahe tabeli vahel seotud olla):</p>
+            <h2>Seoste otsad, ühenduselemendid ja tähendused (Crow's Foot)</h2>
+            <p>Tabelitevahelised jooned ehk ühenduselemendid määravad ära kordsuse (kardinaalsuse) ehk selle, mitu rida saab kahe tabeli vahel seotud olla:</p>
             <div class="diagram"><pre>
   ||--------|{   --> Üks-mitmele (One-to-Many) | Nt: Ühel kliendil on mitu tellimust.
   ||--------||   --> Üks-ühele (One-to-One)   | Nt: Ühel kasutajal on üks profiil.
+  }|--------|{   --> Mitu-mitmele (Many-to-Many) | Nt: Ühel üliõpilasel on mitu kursust ja vastupidi.
             </pre></div>
             <ul>
-                <li><strong>Püstkriips ( | ):</strong> Tähendab "üks" (andmerida on kohustuslik).</li>
-                <li><strong>Harali ots ( { ):</strong> Tähendab "mitu" (varesetala ehk crow's foot märk).</li>
+                <li><strong>Püstkriips ( | ):</strong> Tähendab numbrilist väärtust "üks" (andmerida on kohustuslik).</li>
+                <li><strong>Harali ots ( { või } ):</strong> Tähendab "mitu" (niimetatakse varesetala ehk <em>crow's foot</em> märgiks).</li>
+                <li><strong>Ring ( O ):</strong> Tähendab "null" ehk suhe on mittekohustuslik (suhe võib, aga ei pruugi eksisteerida).</li>
             </ul>
         </section>
 
         <section>
-            <h2>Mis on olemitabelis ja mis on võtmed?</h2>
-            <p>Olemitabel kujutab andmebaasi tabelit, mis sisaldab nime, atribuute (väljasid/veerge) ja andmetüüpe (nt INT, VARCHAR). Tabelites kasutatakse unikaalsuse hoidmiseks spetsiaalseid võtmeid:</p>
+            <h2>Mis olemitabelis olema peab ja olla saab?</h2>
+            <p>Olemitabel kujutab endast reaalset andmebaasi tabelit. Selles peab kindlasti olemas olema:</p>
             <ul>
-                <li><strong>Key (Võti):</strong> Üldine termin veeru kohta, mida kasutatakse andmete otsimiseks või indekseerimiseks.</li>
-                <li><strong>Primary Key (PK - Primaarvõti):</strong> Unikaalne rida tuvastav tunnus (nt <code>kasutaja_id</code>). Ei tohi korduda ega olla tühi (NULL).</li>
-                <li><strong>Foreign Key (FK - Välisvõti):</strong> Väli ühes tabelis, mis viitab teise tabeli primaarvõtmele, tekitades tabelite vahele seose.</li>
-                <li><strong>Composite Key (Liitvõti):</strong> Kahest või enamast veerust koosnev primaarvõti (kasutatakse tihti vahetabelites).</li>
+                <li><strong>Tabeli nimi:</strong> Selge nimetus ainsuses, mis tähistab objekti (nt KASUTAJA, TOODE).</li>
+                <li><strong>Atribuudid (Väljad):</strong> Veergude nimetused, mis iseloomustavad andmeid (nt e_mail, hind, reg_kuupaev).</li>
+                <li><strong>Andmetüübid:</strong> Määratlus, mis tüüpi andmed väljale sobivad (nt INT täisarvudele, VARCHAR tekstile, DATE kuupäevadele).</li>
             </ul>
         </section>
 
         <section>
-            <h2>Võtmete kasutusnäide olemitabelitega</h2>
+            <h2>Võtmete tüübid andmebaasis</h2>
+            <p>Tabelites kasutatakse andmete eristamiseks, unikaalsuse hoidmiseks ja seoste loomiseks järgmiseid võtmeid:</p>
+            <ul>
+                <li><strong>Key (Võti):</strong> Üldine mõiste veeru või veergude grupi kohta, mida kasutatakse andmebaasist andmete kiireks otsimiseks, filtreerimiseks või sorteerimiseks (indekseerimiseks).</li>
+                <li><strong>Primary Key (PK - Primaarvõti):</strong> Unikaalne tunnus, mis tuvastab tabelis igat rida (nt <code>kasutaja_id</code>). See ei tohi kunagi korduda ega olla tühi (NULL). Igal põhitabelil on alati üks primaarvõti.</li>
+                <li><strong>Foreign Key (FK - Välisvõti):</strong> Väli ühes tabelis, mis viitab otse teise tabeli primaarvõtmele. See ongi element, mis tekitab kahe tabeli vahele füüsilise ja loogilise seose.</li>
+                <li><strong>Composite Key (Liitvõti):</strong> Primaarvõti, mis on kokku pandud kahest või enamast eraldi veerust. Seda kasutatakse väga tihti just mitu-mitmele (Many-to-Many) suhete lahendamisel vahetabelites.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Võtmete kasutusnäide koos olemitabelitega</h2>
+            <p>Alljärgnev näide demonstreerib, kuidas võtmed ja olemitabelid reaalset seost loovad:</p>
             <div class="diagram"><pre>
 +-----------------------+            +-----------------------+
 |       KASUTAJA        |            |        TELLIMUS       |
@@ -56,7 +65,7 @@
 |    | nimi: VARCHAR    |            | FK | kasutaja_id: INT |
 +-----------------------+            +-----------------------+
             </pre></div>
-            <p>Välisvõti (FK) tellimuse tabelis on seotud kasutaja primaarvõtmega (PK). See seos tagab andmete terviklikkuse – süsteem ei luba luua tellimust kasutajale, keda pole andmebaasis reaalselt olemas.</p>
+            <p>Selles näites on näha kahe tabeli koostöö: välisvõti (FK) <code>kasutaja_id</code> tellimuse tabelis viitab otse kasutaja tabeli primaarvõtmele (PK). Varesetala ots (<code>|{</code>) asub tellimuse tabeli pool, mis näitab, et üks kasutaja saab luua mitu erinevat tellimust. See reegel ei luba luua ka tellimust olematu kasutaja ID-ga.</p>
         </section>
 
         <section>
