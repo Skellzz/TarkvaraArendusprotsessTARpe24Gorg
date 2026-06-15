@@ -7,99 +7,107 @@
     <title>UML Indeks</title>
 </head>
 <body class="light-mode">
-    <header>
-        <h1>Unified Modeling Language (UML)</h1>
-        <p>UML on standardne visuaalne keel tarkvarasüsteemide struktuuri ja käitumise planeerimiseks ning dokumenteerimiseks.</p>
+    <header> 
+    <h1>Unified Modeling Language (UML)</h1>
+    <p>Unified Modeling Language ehk UML on 1990. aastatel Grady Booch, Ivar Jacobson ja James Rumbaugh poolt loodud üldotstarbeline, objektorienteeritud ja visuaalne modelleerimiskeel, mis annab võimaluse süsteemi arhitektuuri ja disaini visualiseerida.</p>
     </header>
-    
-    <nav>
-        <a href="#usecase">Use Case</a> | <a href="#class">Class</a> | 
-        <a href="#sequence">Sequence</a> | <a href="#state">State</a> | 
-        <a href="#activity">Activity</a> | <a href="#component">Component</a>
-    </nav>
-    
-    <main>
-   
-            <h3>Spetsiifilised diagrammid väljaspool indeksit:</h3>
-            <ul>
-                <li><a href="./ERD.html">UML &gt; ERD Diagramm</a> - Andmebaaside struktuur</li>
-                <li><a href="./FLOWCHART.html">UML &gt; Flowchart (Vooskeem)</a> - Protsesside loogika</li>
-            </ul>
-        </section>
 
-        <section id="usecase">
-            <h2>1. Use Case Diagram (Kasutuslugu)</h2>
-            <p><strong>Kirjeldus:</strong> Näitab süsteemi funktsionaalsust lõppkasutaja vaatenurgast ehk mida süsteem teha võimaldab.</p>
-            <p><strong>Elemendid:</strong> Actor (kasutaja/väline süsteem), Use Case (ovaalne tegevus), Joon (seos osaleja ja tegevuse vahel).</p>
-            <div class="diagram"><pre>
-[Kasutaja] --------> ( Lisa toode ostukorvi )
-            </pre></div>
-        </section>
-    
-        <section id="class">
-            <h2>2. Class Diagram (Klassidiagramm)</h2>
-            <p><strong>Kirjeldus:</strong> Süsteemi struktuurne mudel, mis näitab klasse, nende andmeid (atribuudid) ja funktsioone (meetodid).</p>
-            <p><strong>Elemendid:</strong> Kolmeks jagatud kast (Nimi, Atribuudid, Meetodid), tühja otsaga nool (pärilus ehk inheritance).</p>
-            <div class="diagram"><pre>
-+-----------------------+
-|        Kasutaja       |
-+-----------------------+
-| - kasutajanimi: String|
-+-----------------------+
-| + logiSisse(): void   |
-+-----------------------+
-            </pre></div>
-        </section>
-    
-        <section id="sequence">
-            <h2>3. Sequence Diagram (Järjestusdiagramm)</h2>
-            <p><strong>Kirjeldus:</strong> Näitab objektide ja komponentide vahelist suhtlust kronoloogilises ehk ajalises järjestuses.</p>
-            <p><strong>Elemendid:</strong> Lifeline (katkendjoon, mis näitab objekti aega), pidev joon (päring/tegevus), katkendjoon (vastus).</p>
-            <div class="diagram"><pre>
-Kasutaja           Veebileht
-   |                   |
-   |--- logiSisse() -->|
-   |&lt;-- Edukas/Viga ---|
-            </pre></div>
-        </section>
-    
-        <section id="state">
-            <h2>4. State Diagram (Olekudiagramm)</h2>
-            <p><strong>Kirjeldus:</strong> Kirjeldab ühe kindla objekti elutsüklit, selle võimalikke olekuid ja sündmusi, mis olekut muudavad.</p>
-            <p><strong>Elemendid:</strong> Ring (algus/lõpp), ümar ristkülik (olek), nool (üleminek koos sündmusega).</p>
-            <div class="diagram"><pre>
-(Algus) --> [ Konto ootel ] --(Kinnita meil)--> [ Konto aktiivne ]
-            </pre></div>
-        </section>
-    
-        <section id="activity">
-            <h2>5. Activity Diagram (Tegevusdiagramm)</h2>
-            <p><strong>Kirjeldus:</strong> Dünaamiline diagramm, mis näitab süsteemi tegevuste ja sammude voogu (sarnane vooskeemile).</p>
-            <p><strong>Elemendid:</strong> Ümar kast (tegevus), romb (otsustuskoht/tingimus hargnevate teedega Jah/Ei).</p>
-            <div class="diagram"><pre>
-[ Ava äpp ] --> { Kas logitud? } --Jah--> [ Kuva sisu ]
-                       |
-                      Ei --> [ Kuva sisselogimine ]
-            </pre></div>
-        </section>
+    <h2>Mis üldse on UML?</h2>
+    <p>UML on standardne visuaalne keel tarkvarasüsteemide spetsifitseerimiseks, visualiseerimiseks, konstrueerimiseks ja dokumenteerimiseks. See aitab arendajatel ja ärijuhtidel keerulistest süsteemidest ühtemoodi aru saada.</p>
 
-        <section id="component">
-            <h2>6. Component Diagram (Komponendidiagramm)</h2>
-            <p><strong>Kirjeldus:</strong> Struktuurikomponentide diagramm, mis näitab koodimoodulite, API-de või andmebaaside vahelisi tehnilisi sõltuvusi.</p>
-            <p><strong>Elemendid:</strong> Kast (komponent/moodul), nool (sõltuvus ehk liides teise komponendiga).</p>
-            <div class="diagram"><pre>
-[ Kliendiliides ] --(REST API)--> [ Maksete moodul ]
-            </pre></div>
-        </section>
-    </main>
+    <h2>Kasutamine</h2>
+    <p>UML-i kasutatakse peamiselt tarkvaraarenduses, kuid see sobib ka äriprotsesside ja muude mittetarkvaraliste süsteemide modelleerimiseks. UML-i haldab Object Management Group (OMG), kes kasutab seda ka teiste raamistike, nagu ühtse arhitektuuriraamistiku (UAF) ja süsteemide modelleerimise keele (SysML) määratlemiseks.</p>
 
-    <hr>
-    <footer>
-        <h3>Ainemapi osad:</h3>
-        <ul>
-            <li><a href="./ERD.html">ERD diagramm</a></li>
-            <li><a href="./FLOWCHART.html">Flowchart (Vooskeem)</a></li>
-        </ul>
-    </footer>
+    <h2>Seotud diagrammid (ERD ja Vooskeem)</h2>
+    <p>Kuigi järgnevad diagrammid on tihedalt seotud süsteemide projekteerimisega, on nad eraldiseisvad mudelid, mida sageli kasutatakse koos UML-iga:</p>
+    <ul>
+        <li><a href="https://en.wikipedia.org/wiki/Entity%E2%80%93relationship_model" target="_blank">ERD (Entity-Relationship Diagram)</a> - Kasutatakse andmebaaside struktuuri modelleerimiseks.</li>
+        <li><a href="https://en.wikipedia.org/wiki/Flowchart" target="_blank">Vooskeem (Flowchart) / Activity Diagram</a> - Kasutatakse algoritmide ja sammsammuliste töövoogude kujutamiseks.</li>
+    </ul>
+    <p>
+        ERD diagramm näeb tüüpiliselt selline välja:<br/>
+        <img src="/pildid/Entity-Relationship-Diagram-Sample.png" alt="ERD"/><br/><br/>
+        Vooskeem näeb tüüpiliselt selline välja:<br/>
+        <img src="/pildid/Flow-Chart-diagram-in-Sparx-Enterprise-Architect.png" alt="FLOWCHART"/>
+    </p>
+
+    <h2>UML-i Diagrammid</h2>
+    <table>
+        <tr>
+            <td>
+                <h3>Use Case (Kasutusjuhtude diagramm)</h3>
+                <p>Use Case diagramm on graafiline kujutis kasutaja või välise süsteemi võimalikust suhtlusest arendatava süsteemiga. See näitab ära süsteemi funktsionaalsuse ja selle, kes milliseid tegevusi käivitab.</p>
+                <h4>Kujundid ja elemendid:</h4>
+                <p>
+                    &gt; Actor (Toimija/Kasutaja) - Pulgakujuline joonis, mis tähistab kasutajarolli (nt Klient, Kelner, Kassapidaja, Kokk).<br>
+                    &gt; Use Case (Kasutusjuht) - Ovaal või ellips, mis tähistab süsteemi tegevust (nt Toidu tellimine, Söömine, Maksmine).<br>
+                    &gt; Joon (Seos / Association) - Pidev joon, mis ühendab toimijat kasutusjuhtumiga.<br>
+                    &gt; Süsteemi piir (System Boundary) - Suur ristkülik, mis eraldab süsteemi siseseid tegevusi välistest toimijatest.<br>
+                    &gt; Nool (&lt;&lt;extend&gt;&gt; / &lt;&lt;include&gt;&gt;) - Katkendlik nool, mis näitab seoseid kasutusjuhtude vahel (nt veini tellimine laiendab toidu tellimist).
+                </p>
+                <img src="/pildid/Use_case_restaurant_model.svg.png" alt="UseCase"/><br>
+                <li><a href="https://en.wikipedia.org/wiki/Use_case_diagram" target="_blank">Loe lähemalt: Use Case Diagram</a></li>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Class Diagram (Klassidiagramm)</h3>
+                <p>Class Diagram on staatilise struktuuri diagramm, mis kirjeldab süsteemi ülesehitust, näidates süsteemi klasse, nende atribuute, meetodeid ning klassidevahelisi seoseid. See on objektorienteeritud arenduse alustala.</p>
+                <h4>Kujundid ja elemendid:</h4>
+                <p>
+                    &gt; Klassikast (Class Box) - Ristkülik, mis on jagatud kolmeks osaks: ülal on klassi nimi, keskel atribuudid (omadused) ja all meetodid (tegevused).<br>
+                    &gt; Pidev joon nimega (Association) - Näitab tavalist seost kahe klassi vahel.<br>
+                    &gt; Kolmnurkse otsaga joon (Generalization/Inheritance) - Näitab pärilust ehk alam- ja ülemklassi suhet.<br>
+                    &gt; Rombi otsaga joon (Aggregation/Composition) - Näitab terviku ja osa suhet (nt auto koosneb ratastest).
+                </p>
+                <img src="/pildid/UML_diagrams_overview.png" alt="ClassDiagram"/><br>
+                <li><a href="https://en.wikipedia.org/wiki/Class_diagram" target="_blank">Loe lähemalt: Class Diagram</a></li>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Sequence Diagram (Jadadiagramm)</h3>
+                <p>Sequence Diagram on interaktsioonidiagramm, mis näitab, kuidas objektid üksteisega ajas kronoloogilises järjekorras suhtlevad ja milliseid sõnumeid nad vahetavad.</p>
+                <h4>Kujundid ja elemendid:</h4>
+                <p>
+                    &gt; Objektikastid (Lifelines) - Ristkülikud diagrammi ülaosas, millest jookseb alla katkendlik joon (eluliin), tähistades objekti olemasolu ajas.<br>
+                    &gt; Aktiveerimisristkülik (Execution Specification) - Eluliinil olev pikk kitsas ristkülik, mis näitab, millal objekt on parajasti aktiivne või teeb tööd.<br>
+                    &gt; Pidev nool (Synchronous Message) - Sõnum ühelt objektilt teisele, mis nõuab vastust.<br>
+                    &gt; Katkendlik nool (Return Message) - Vastussõnum eelnevale päringule.
+                </p>
+                <img src="/pildid/Activity_conducting.png" alt="SequenceDiagram"/><br>
+                <li><a href="https://en.wikipedia.org/wiki/Sequence_diagram" target="_blank">Loe lähemalt: Sequence Diagram</a></li>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>State Machine Diagram (Oleku diagramm)</h3>
+                <p>State Machine Diagram näitab ühe objekti elutsüklit ehk erinevaid olekuid, milles see objekt võib olla, ning sündmusi, mis põhjustavad üleminekuid ühest olekust teise.</p>
+                <h4>Kujundid ja elemendid:</h4>
+                <p>
+                    &gt; Täidetud must ring (Initial State) - Süsteemi või objekti alguspunkt.<br>
+                    &gt; Ümarate nurkadega ristkülik (State) - Tähistab objekti konkreetset olekut (nt "Tellimus esitatud", "Makstud", "Tarnitud").<br>
+                    &gt; Suunatud nool (Transition) - Näitab liikumist ühelt olekult teisele. Noole kohale kirjutatakse sündmus, mis ülemineku käivitab.<br>
+                    &gt; Topeltering või ring musta täpiga sees (Final State) - Objekti elutsükli lõpp-punkt.
+                </p>
+                <img src="/pildid/State_diagram_example.png" alt="StateDiagram"/><br>
+                <li><a href="https://en.wikipedia.org/wiki/State_diagram" target="_blank">Loe lähemalt: State Diagram</a></li>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Deployment Diagram (Juurutusskeem)</h3>
+                <p>Deployment Diagram on füüsilise struktuuri diagramm, mis näitab, kuidas tarkvarakomponendid ja artefaktid on jaotatud füüsilisele riistvarale ja serveritele (sõlmedele) ning kuidas need sõlmed omavahel ühenduses on.</p>
+                <h4>Kujundid ja elemendid:</h4>
+                <p>
+                    &gt; Kolmemõõtmeline kuup (Node/Sõlm) - Tähistab füüsilist või virtuaalset riistvararessurssi (nt server, kliendi arvuti, andmebaasiserver).<br>
+                    &gt; Ristkülik dokumendi ikooniga (Artifact) - Tähistab füüsilist tarkvarafaili (nt executable, .jar fail, andmebaasi skript), mis on sõlme sisse paigaldatud.<br>
+                    &gt; Pidev ühendusjoon (Communication Path) - Näitab võrgu- või sideliidest sõlmede vahel (nt TCP/IP, HTTP, JDBC).
+                </p>
+                <img src="/pildid/Deployment_diagram_example.png" alt="DeploymentDiagram"/><br>
+                <li><a href="https://en.wikipedia.org/wiki/Deployment_diagram" target="_blank">Loe lähemalt: Deployment Diagram</a></li>
+            </td>
+        </tr>
+    </table>
 </body>
 </html>
