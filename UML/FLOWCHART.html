@@ -12,30 +12,27 @@
         <p>Flowchart ehk vooskeem kujutab algoritmi, protsessi või koodi töövoogu samm-sammuliselt.</p>
     </header>
     
-    <nav>
-        <a href="UML.html">Tagasi UML Indeksisse</a> | <a href="ERD.html">ERD Skeem</a>
-    </nav>
-    
     <main>
         <section>
-            <h2>Mis on Flowchart ja kus seda kasutatakse?</h2>
-            <p>Vooskeem on graafiline diagramm, mis kirjeldab tegevuste järjekorda ülalt alla või vasakult paremale. Seda kasutatakse programmeerimises rakenduse või algoritmi loogika planeerimiseks ja läbimõtlemiseks enne koodi kirjutamist, samuti äriprotsesside kaardistamiseks.</p>
+            <h2>Mis on Flowchart, millal see loodi ja kus seda kasutatakse?</h2>
+            <p>Vooskeem on graafiline diagramm, mis kirjeldab tegevuste järjekorda ülalt alla või vasakult paremale. Esimese struktureeritud vooskeemi meetodi tutvustas insener <strong>Frank Gilbreth 1921. aastal</strong> Ameerika Mehaanikainseneride Ühingule (ASME).</p>
+            <p>Arvutiteadusesse ja programmeerimisse tõid vooskeemid algoritmide planeerimiseks matemaatikud <strong>Herman Goldstine ja John von Neumann 1947. aastal</strong>. Tänapäeval kasutatakse seda laialdaselt tarkvaraarenduses rakenduse loogika läbimõtlemiseks enne koodi kirjutamist ning ka äriprotsesside kaardistamiseks.</p>
         </section>
 
         <section>
             <h2>Kujundite tähendused ja kasutus</h2>
             <ul>
-                <li><strong>Ovaal (Terminaator):</strong> Tähistab alati protsessi algust (START) või lõppu (END).</li>
-                <li><strong>Ristkülik (Protsess):</strong> Tähistab standardset tegevust, operatsiooni või matemaatilist arvutust.</li>
-                <li><strong>Romb (Otsustuskoht):</strong> Kujutab tingimust (koodis <code>if/else</code>). Sellest hargneb voog alati vastavalt tulemusele kaheks: "Jah" või "Ei".</li>
-                <li><strong>Parallelogramm (Sisend/Väljund):</strong> Näitab andmete lugemist kasutajalt või tulemuste kuvamist ekraanile.</li>
-                <li><strong>Nooled:</strong> Määratlevad protsessi täitmise täpse suuna.</li>
+                <li><strong>Ovaal (Terminaator):</strong> Tähistab alati protsessi algust (START) või lõppu (END). <em>(Kasutusnäide: Programmi käivitumine või töö lõpetamine)</em></li>
+                <li><strong>Ristkülik (Protsess):</strong> Tähistab standardset tegevust, operatsiooni või matemaatilist arvutust. <em>(Kasutusnäide: Valemi arvutamine või andmete muutmine taustal)</em></li>
+                <li><strong>Romb (Otsustuskoht):</strong> Kujutab tingimust (koodis <code>if/else</code>). Sellest hargneb voog alati vastavalt tulemusele kaheks: "Jah" või "Ei". <em>(Kasutusnäide: Kas parool oli õige?)</em></li>
+                <li><strong>Parallelogramm (Sisend/Väljund):</strong> Näitab andmete lugemist kasutajalt või tulemuste kuvamist ekraanile. <em>(Kasutusnäide: Kasutaja sisestab tekstiväljale oma nime)</em></li>
+                <li><strong>Nooled:</strong> Määratlevad protsessi täitmise täpse suuna ja ühendavad kujundeid.</li>
             </ul>
         </section>
 
         <section>
-            <h2>Praktiline näide: Bitcoin Kalkulaator</h2>
-            <p>Eelnevalt loodud Bitcoin kalkulaatori rakenduse loogika ja töövoog:</p>
+            <h2>Praktiline näide: Bitcoin Kalkulaatori vooskeem</h2>
+            <p>Alljärgnev skeem on loodud näidisena eelnevalt praktikumis tehtud Bitcoin kalkulaatori äpi loogika ja töövoo kohta:</p>
             <div class="diagram"><pre>
        ( START )
            |
@@ -51,12 +48,12 @@
 [ Arvuta: BTC = EUR/kurss ] [ Kuva viga ]
       |                   |
       v                   |
-   [/ Kuva tulemus /] <---+
+   [/ Kuva tulemus /] &lt;---+
            |
            v
         ( END )
             </pre></div>
-            <p>Selle skeemi alusel ehitasime kalkulaatori funktsionaalsuse, kus programm kontrollib rombi sees veebipäringu edukust ning teeb vastavalt sellele matemaatilise tehte või kuvab kasutajale veateate.</p>
+            <p>Selle konkreetse Bitcoin äpi näite puhul ehitasime funktsionaalsuse üles täpselt vooskeemi alusel: programm kontrollib rombi sees veebipäringu (API) edukust ning teeb vastavalt sellele matemaatilise tehte (ristkülik) või kuvab kasutajale veateate.</p>
         </section>
 
         <section>
